@@ -32,7 +32,7 @@ class DataReader {
 	 * @return array
 	 */
 	public function getRows() {
-		return array_slice($this->data, $this->offset, $this->length);
+		return array_slice($this->data, $this->offset, $this->length+1);
 	}
 }
 
