@@ -11,12 +11,23 @@ class csvviewer {
     function __construct() {
         $this->_getArgs();
         $data_reader = new DataReader($this->filename, $this->_page_size, $this->_offset);
+        $rows       = $data_reader->getRows();
 
-        $iterator = new DataParser($lines);
-        $content  = new PageRenderer($iterator);
+        $parser = new DataParser($rows);
+        $page   = $parser->getPage();
+
+        $renderer  = new PageRenderer($page);
+        $content   = $renderer->render();
+
+        $writer = new DataWriter($content);
 
     }
 
+    /**
+     * gets commandline args and sets class members accordingly
+     *
+     * @return void
+     */
     function _getArgs() {
         global $argv;
         $this->_filename = $argv[1];
