@@ -2,6 +2,7 @@
 class DataReader {
 	
 	private $data;
+	private $header;
 	
 	private $length;
 	
@@ -24,9 +25,11 @@ class DataReader {
 		if ($this->data === false) {
 			throw new RuntimeException('File not Found: '.$filename);
 		}
-		
 		//clan data
 		array_walk($this->data, 'removeLineBreak');
+		
+		$this->header = array_shift($this->data);
+		
 	}
 	
 	/**
@@ -36,7 +39,7 @@ class DataReader {
 	 */
 	public function getRows() {
 		$data = array_slice($this->data, $this->offset, $this->length);
-		array_unshift($data, $this->data[0]);
+		array_unshift($data, $this->header);
 		return $data;
 	}
 	
