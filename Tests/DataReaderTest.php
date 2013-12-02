@@ -60,7 +60,7 @@ class DataReaderTest extends PHPUnit_Framework_TestCase {
 		
 		$array = $this->DataReader->getRows();
 		
-		$this->assertEquals(2, count($array));
+		$this->assertEquals(3, count($array));
 	}
 }
 

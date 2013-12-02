@@ -36,7 +36,8 @@ class DataReader {
 	 */
 	public function getRows() {
 		$data = array_slice($this->data, $this->offset, $this->length);
-		return array_unshift($data, $this->data[0]);
+		array_unshift($data, $this->data[0]);
+		return $data;
 	}
 	
 }
