@@ -8,8 +8,29 @@ class csvviewer {
     private $_offset    = 0;
     private $_filename  = '';
 
-    function __construct() {
+    public function __construct() {
         $this->_getArgs();
+        $this->_viewCsv();
+        $this->_waitForInput();
+    }
+
+    private function _waitForInput() {
+        echo "N für weitere ".$this->_page_size." Zeilen.\n";
+        echo "P für vorherige ".$this->_page_size." Zeilen.\n";
+        $handle = fopen ("php://stdin","r");
+        $line = trim(fgets($handle));
+        switch ($line) {
+            case 'N':
+                $this->_offset += $this->_page_size;
+                break;
+            case 'P':
+                $this->_offset -= $this->_page_size;
+                break;
+        }
+        $this->_viewCsv();
+    }
+
+    private function _viewCsv() {
         $data_reader = new DataReader($this->filename, $this->_page_size, $this->_offset);
         $rows       = $data_reader->getRows();
 
@@ -22,6 +43,7 @@ class csvviewer {
         $writer = new DataWriter($content);
         $writer->write();
 
+        $this->_waitForInput();
     }
 
     /**
@@ -29,7 +51,7 @@ class csvviewer {
      *
      * @return void
      */
-    function _getArgs() {
+    private function _getArgs() {
         global $argv;
         $this->_filename = $argv[1];
         if (isset($argv[2])) {
