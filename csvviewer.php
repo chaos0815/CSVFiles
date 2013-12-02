@@ -2,9 +2,12 @@
 
 require_once('DataParser.php');
 require_once('DataWriter.php');
+
 class csvviewer {
 
-    private $_page_size = 3;
+    const DEFAULT_PAGE_SIZE = 3;
+
+    private $_page_size;
     private $_offset    = 0;
     private $_filename  = '';
 
@@ -14,9 +17,15 @@ class csvviewer {
         $this->_waitForInput();
     }
 
+    /**
+     * waiting for input and triggering process
+     *
+     * @return void
+     */
     private function _waitForInput() {
-        echo "N für weitere ".$this->_page_size." Zeilen.\n";
-        echo "P für vorherige ".$this->_page_size." Zeilen.\n";
+        echo "N for previous ".$this->_page_size." lines.\n";
+        echo "P for ".$this->_page_size." more lines.\n";
+        echo "X for exit";
         $handle = fopen ("php://stdin","r");
         $line = trim(fgets($handle));
         switch ($line) {
@@ -26,13 +35,21 @@ class csvviewer {
             case 'P':
                 $this->_offset -= $this->_page_size;
                 break;
+            case 'X':
+                echo "\n Exiting!";
+                exit;
         }
         $this->_viewCsv();
     }
 
+    /**
+     * main processing, calling reader, parser, renderer and writer
+     *
+     * @return void
+     */
     private function _viewCsv() {
         $data_reader = new DataReader($this->filename, $this->_page_size, $this->_offset);
-        $rows       = $data_reader->getRows();
+        $rows        = $data_reader->getRows();
 
         $parser = new DataParser($rows);
         $page   = $parser->getPage();
@@ -59,6 +76,8 @@ class csvviewer {
             if (isset($argv[3])) {
                 $this->_offset = $argv[2];
             }
+        } else {
+            $this->_page_size = self::DEFAULT_PAGE_SIZE;
         }
     }
 }
