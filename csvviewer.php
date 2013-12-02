@@ -1,7 +1,11 @@
 <?php
 
-require_once('DataParser.php');
-require_once('DataWriter.php');
+require_once 'DataParser.php';
+require_once 'DataReader.php';
+require_once 'PageRenderer.php';
+require_once 'DataWriter.php';
+
+new csvviewer();
 
 class csvviewer {
 
@@ -23,20 +27,23 @@ class csvviewer {
      * @return void
      */
     private function _waitForInput() {
-        echo "N for previous ".$this->_page_size." lines.\n";
+        echo "\n\nN for previous ".$this->_page_size." lines.\n";
         echo "P for ".$this->_page_size." more lines.\n";
-        echo "X for exit";
+        echo "X for exit\n";
         $handle = fopen ("php://stdin","r");
         $line = trim(fgets($handle));
         switch ($line) {
             case 'N':
+            case 'n':
                 $this->_offset += $this->_page_size;
                 break;
             case 'P':
+            case 'p':
                 $this->_offset -= $this->_page_size;
                 break;
             case 'X':
-                echo "\n Exiting!";
+            case 'x':
+                echo "\n Exiting!\n\n";
                 exit;
         }
         $this->_viewCsv();
@@ -48,7 +55,8 @@ class csvviewer {
      * @return void
      */
     private function _viewCsv() {
-        $data_reader = new DataReader($this->filename, $this->_page_size, $this->_offset);
+        $current_path = dirname(__FILE__);
+        $data_reader = new DataReader($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
         $rows        = $data_reader->getRows();
 
         $parser = new DataParser($rows);
@@ -74,7 +82,7 @@ class csvviewer {
         if (isset($argv[2])) {
             $this->_page_size = $argv[2];
             if (isset($argv[3])) {
-                $this->_offset = $argv[2];
+                $this->_offset = $argv[3];
             }
         } else {
             $this->_page_size = self::DEFAULT_PAGE_SIZE;
