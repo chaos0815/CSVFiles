@@ -22,7 +22,7 @@ class DataReaderTest extends PHPUnit_Framework_TestCase {
 		
 		// TODO Auto-generated DataReaderTest::setUp()
 		
-		$this->DataReader = new DataReader('test.csv', 2);
+		$this->DataReader = new DataReader(dirname($_SERVER['PHP_SELF']).'/Tests/test.csv', 2);
 	}
 	
 	/**
@@ -57,9 +57,10 @@ class DataReaderTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testGetRows() {
 		// TODO Auto-generated DataReaderTest->testGetRows()
-		$this->markTestIncomplete ( "getRows test not implemented" );
 		
-		$this->DataReader->getRows(/* parameters */);
+		$array = $this->DataReader->getRows();
+		
+		$this->assertEquals(2, count($array));
 	}
 }
 

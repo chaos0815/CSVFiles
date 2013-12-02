@@ -21,6 +21,11 @@ class DataReader {
 		$this->offset = $offset;
 		
 		$fh = fopen($filename, 'r');
+		
+		if ($fh === false) {
+			throw new RuntimeException('File not Found: '.$filename);
+		}
+		
 		$this->data = file($fh);
 	}
 	
