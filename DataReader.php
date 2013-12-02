@@ -24,6 +24,9 @@ class DataReader {
 		if ($this->data === false) {
 			throw new RuntimeException('File not Found: '.$filename);
 		}
+		
+		//clan data
+		array_walk($this->data, 'removeLineBreak');
 	}
 	
 	/**
@@ -32,7 +35,12 @@ class DataReader {
 	 * @return array
 	 */
 	public function getRows() {
-		return array_slice($this->data, $this->offset, $this->length+1);
+		$data = array_slice($this->data, $this->offset, $this->length);
+		return array_unshift($data, $this->data[0]);
 	}
+	
 }
+	function removeLineBreak($string) {
+		return str_replace(array("\n", "\r"), '', $string);
+	}
 
