@@ -20,7 +20,7 @@ class PageRenderer {
      * @param ArrayIterator $data
      */
     public function __construct(ArrayIterator $data) {
-        if ($this->data->count() <= 1) {
+        if ($data->count() <= 1) {
             throw new RuntimeException('No data in file.');
         }
 
@@ -36,8 +36,15 @@ class PageRenderer {
         $result = '';
 
         $this->data->rewind();
+        
+        $result .= $this->_formatHeader($this->data->current());
+        $this->data->next();
+        
         while ($this->data->valid()) {
             $record = $this->data->current();
+
+            $result .= $this->_formatLine($record);
+
             $this->data->next();
         }
 
@@ -45,9 +52,44 @@ class PageRenderer {
     }
 
     /**
+     * @param array $record
+     *
+     * @return string
+     */
+    private function _formatHeader($record) {
+        $result = $this->_formatLine($record);
+        
+        foreach ($record as $k => $v) {
+            $len = $this->max_lengths[$k];
+            $result .= sprintf("%'" .self::HEADER_DELIM. $len . "s", '');
+            $result .= self::HEADER_COL_DELIM;
+        }
+        
+        return $result . "\n";
+    }
+
+    /**
+     * @param array $record
+     *
+     * @return string
+     */
+    private function _formatLine($record) {
+        $result = '';
+
+        foreach ($record as $k => $v) {
+            $len = $this->max_lengths[$k];
+
+            $result .= sprintf("%-" . $len . "s", $v);
+            $result .= self::COLUMN_DELIM;
+        }
+
+        return $result . "\n";
+    }
+    
+    /**
      * return void
      */
-    public function _calculateMaxLengths() {
+    private function _calculateMaxLengths() {
         $this->max_lengths = array();
 
         $this->data->rewind();
