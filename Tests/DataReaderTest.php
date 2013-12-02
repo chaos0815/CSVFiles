@@ -22,7 +22,7 @@ class DataReaderTest extends PHPUnit_Framework_TestCase {
 		
 		// TODO Auto-generated DataReaderTest::setUp()
 		
-		$this->DataReader = new DataReader('/test.csv', 2);
+		$this->DataReader = new DataReader(dirname(__FILE__).'/test.csv', 2);
 	}
 	
 	/**

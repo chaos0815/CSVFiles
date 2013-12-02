@@ -20,7 +20,7 @@ class DataReader {
 		$this->length = $page_length;
 		$this->offset = $offset;
 
-		$this->data = file(dirname(__FILE__).$filename);
+		$this->data = file($filename);
 		if ($this->data === false) {
 			throw new RuntimeException('File not Found: '.$filename);
 		}
