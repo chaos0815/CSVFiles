@@ -2,6 +2,8 @@
 
 class DataParser {
     
+    const RECORD_DELIM = ';';
+    
     /**
      * @var array
      */
@@ -21,11 +23,18 @@ class DataParser {
         $result = new ArrayIterator();
         
         foreach ($this->lines as $line) {
-            
+            $result->append($this->_parseLine($line));
         }
         
         return $result;
     }
     
-    
+    /**
+     * @param string $line
+     *
+     * @return array
+     */
+    private function _parseLine($line) {
+        return explode(self::RECORD_DELIM, $line);
+    }
 }
