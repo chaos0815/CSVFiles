@@ -20,6 +20,7 @@ class csvviewer {
         $content   = $renderer->render();
 
         $writer = new DataWriter($content);
+        $writer->write();
 
     }
 
