@@ -3,5 +3,6 @@ LICENSE.txt
 README.txt
 demos/
 extras/documentation
+org.eclipse.php.*
 /.buildpath
 /.project
