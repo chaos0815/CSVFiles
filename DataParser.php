@@ -13,6 +13,9 @@ class DataParser {
      * @param array $lines
      */
     public function __construct($lines) {
+        if (!is_array($lines)) {
+            throw new InvalidArgumentException('Expected array.');
+        }
         $this->lines = $lines;
     }
 
