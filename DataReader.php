@@ -1,7 +1,14 @@
 <?php
 class DataReader {
+	
+	private $data;
+	
+	private $length;
+	
+	private $offset;
+	
 	/**
-	 * new instance of Datareader
+	 * new instance of DataReader
 	 * 
 	 * @param string  $filename
 	 * @param integer $page_length
@@ -10,7 +17,16 @@ class DataReader {
 	 * @return void
 	 */
 	public function __construct($filename, $page_length, $offset = 0) {
+		$this->length = $page_length;
+		$this->offset = $offset;
 		
+		$fh = fopen($filename, 'r');
+		
+		if ($fh === false) {
+			throw new RuntimeException('File not Found: '.$filename);
+		}
+		
+		$this->data = file($fh);
 	}
 	
 	/**
@@ -19,7 +35,7 @@ class DataReader {
 	 * @return array
 	 */
 	public function getRows() {
-		return array();
+		return array_slice($this->data, $this->offset, $this->length);
 	}
 }
 
