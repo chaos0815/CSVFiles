@@ -82,7 +82,7 @@ class csvviewer {
 
         $page = $this->_paging->extractNextPage();
 
-        $renderer  = new PageRenderer($page);
+        $renderer  = new TableFormatter($page);
         $content   = $renderer->render();
 
         $writer = new DataWriter($content);
