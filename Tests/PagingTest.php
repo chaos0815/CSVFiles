@@ -64,24 +64,13 @@ class PagingTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(2, $this->Paging->getPageIndex());
 	}
 	
-	/**
-	 * Tests Paging->getPage()
-	 */
-	public function testGetPage() {
-		// TODO Auto-generated PagingTest->testGetPage()
-		$this->markTestIncomplete ( "getPage test not implemented" );
-		
-		$this->Paging->getPage(/* parameters */);
-	}
 	
 	/**
 	 * Tests Paging->getPageIndex()
 	 */
 	public function testGetPageIndex() {
-		// TODO Auto-generated PagingTest->testGetPageIndex()
-		$this->markTestIncomplete ( "getPageIndex test not implemented" );
 		
-		$this->Paging->getPageIndex(/* parameters */);
+		$this->assertEquals(1, $this->Paging->getPageIndex());
 	}
 }
 
