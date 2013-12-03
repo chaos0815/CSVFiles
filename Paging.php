@@ -28,15 +28,17 @@ class Paging {
 	}
 	
 	public function extractNextPage() {
-		return $this->getPage($this->_pageIndex++);
+		$this->_pageIndex++;
+		return $this->getPage();
 	}
 	
 	public function extractPreviousPage() {
-		return $this->getPage($this->_pageIndex--);
+		$this->_pageIndex--;
+		return $this->getPage();
 	}
 	
-	public function getPage($pageNo) {
-		$page = new Page($this->_header, $this->_getRecordsForPage($pageNo), $this->getPageCount(), $this->_pageIndex);
+	public function getPage() {
+		$page = new Page($this->_header, $this->_getRecordsForPage($this->_pageIndex), $this->getPageCount(), $this->_pageIndex);
 		
 		return $page;
 	}
