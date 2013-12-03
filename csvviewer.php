@@ -32,16 +32,12 @@ class csvviewer {
      */
     private $_paging;
 
-    /**
-     * @var Page
-     */
-    private $_page;
+    private $_what = '';
 
     public function __construct() {
         $this->_page_size = self::DEFAULT_PAGE_SIZE;
 
-        $this->_paging = new Paging();
-        $this->_page = $this->_getPage();
+
 
         $this->_start();
     }
@@ -63,7 +59,10 @@ class csvviewer {
         $parser = new CSVParser();
         $record = $parser->parseCSV($rows);
 
-        $renderer = new TableFormatter($this->_page);
+        $this->_paging = new Paging();
+        $page          = $this->_getPage($record);
+
+        $renderer = new TableFormatter($page);
         $content  = $renderer->formatAsTable();
 
         $writer = new DataWriter($content);
@@ -80,8 +79,8 @@ class csvviewer {
      *
      * @return Page
      */
-    private function _getPage($which = '') {
-        switch ($which) {
+    private function _getPage($record) {
+        switch ($this->_what) {
             case 'next':
                 return $this->_paging->extractNextPage();
                 break;
@@ -97,14 +96,14 @@ class csvviewer {
      * sets next page as current page
      */
     private function _nextPage() {
-        $this->_page = $this->_getPage('next');
+        $this->_what = 'next';
     }
 
     /**
      * sets previous page as current page
      */
     private function _previousPage() {
-        $this->_page = $this->_getPage('previous');
+        $this->_what = 'previous';
     }
 
     /**
