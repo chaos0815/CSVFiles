@@ -28,12 +28,16 @@ class Paging {
 	}
 	
 	public function extractNextPage($records) {
-		$this->_pageIndex++;
+		if ($this->_pageIndex < $this->getPageCount()) {
+			$this->_pageIndex++;
+		}
 		return $this->getPage($records);
 	}
 	
 	public function extractPreviousPage($records) {
-		$this->_pageIndex--;
+		if ($this->_pageIndex > 1) {
+			$this->_pageIndex--;
+		}
 		return $this->getPage($records);
 	}
 	

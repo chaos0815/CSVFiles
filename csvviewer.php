@@ -56,8 +56,8 @@ class csvviewer {
         $data_reader = new FileIO();
         $rows        = $data_reader->readFile($current_path.'/'.$this->_filename);
 
-        $parser = new CSVParser($rows);
-        $record = $parser->parseCSV();
+        $parser = new CSVParser();
+        $record = $parser->parseCSV($rows);
 
         $this->_paging = new Paging();
         $page          = $this->_getPage($record);

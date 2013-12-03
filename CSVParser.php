@@ -6,27 +6,18 @@ class CSVParser {
     const RECORD_DELIM = ';';
 
     /**
-     * @var array
-     */
-    private $lines;
-
-    /**
      * @param array $lines
+     *
+     * @return ArrayIterator
      */
-    public function __construct($lines) {
+    public function parseCSV($lines) {
         if (!is_array($lines)) {
             throw new InvalidArgumentException('Expected array.');
         }
-        $this->lines = $lines;
-    }
 
-    /**
-     * @return ArrayIterator
-     */
-    public function parseCSV() {
         $result = new ArrayIterator();
 
-        foreach ($this->lines as $line) {
+        foreach ($lines as $line) {
             $record = new Record($this->_parseLine($line));
             $result->append($record);
         }

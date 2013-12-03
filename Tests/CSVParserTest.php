@@ -9,47 +9,14 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class CSVParserTest extends PHPUnit_Framework_TestCase {
 
 	/**
-	 *
-	 * @var CSVParser
-	 */
-	private $csv_parser;
-
-	/**
-	 * Prepares the environment before running a test.
-	 */
-	protected function setUp() {
-		parent::setUp ();
-
-		// TODO Auto-generated DataParserTest::setUp()
-		$data = array('Name;Age;City','Peter;42;New York','Paul;57;London');
-
-		$this->csv_parser = new CSVParser($data);
-	}
-
-	/**
-	 * Cleans up the environment after running a test.
-	 */
-	protected function tearDown() {
-		// TODO Auto-generated DataParserTest::tearDown()
-		$this->csv_parser = null;
-
-		parent::tearDown ();
-	}
-
-	/**
-	 * Constructs the test case.
-	 */
-	public function __construct() {
-		// TODO Auto-generated constructor
-	}
-
-
-	/**
 	 * Tests CSVParser->parseCSV()
 	 */
 	public function testParseCSV() {
-		$page = $this->csv_parser->parseCSV();
-		
+		$data = array('Name;Age;City','Peter;42;New York','Paul;57;London');
+
+		$csv_parser = new CSVParser();
+		$page = $csv_parser->parseCSV($data);
+
 		$this->assertInstanceOf('ArrayIterator', $page);
 		$this->assertEquals(3, count($page));
 	}
