@@ -4,7 +4,7 @@
  * @author Christian Wolf
  *
  */
-class Record extends ArrayIterator {
+class Record extends ArrayObject {
 	
 }
 
