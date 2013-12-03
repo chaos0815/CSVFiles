@@ -1,6 +1,6 @@
 <?php
 
-class DataParser {
+class CSVParser {
 
     const RECORD_DELIM = ';';
 
