@@ -32,6 +32,9 @@ class csvviewer {
      */
     private $_paging;
 
+    /**
+     * @var Page
+     */
     private $_page;
 
     public function __construct() {
@@ -90,6 +93,19 @@ class csvviewer {
         }
     }
 
+    /**
+     * sets next page as current page
+     */
+    private function _nextPage() {
+        $this->_page = $this->_getPage('next');
+    }
+
+    /**
+     * sets previous page as current page
+     */
+    private function _previousPage() {
+        $this->_page = $this->_getPage('previous');
+    }
 
     /**
      * waiting for input and triggering process
@@ -105,11 +121,11 @@ class csvviewer {
         switch ($line) {
             case 'N':
             case 'n':
-                $this->_page = $this->_getPage('next');
+                $this->_nextPage();
                 break;
             case 'P':
             case 'p':
-                $this->_page = $this->_getPage('previous');
+                $this->_previousPage();
                 break;
             case 'X':
             case 'x':
@@ -118,5 +134,4 @@ class csvviewer {
         }
         $this->_start();
     }
-
 }
