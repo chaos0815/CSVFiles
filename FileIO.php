@@ -2,17 +2,11 @@
 class FileIO {
 
     /**
-     * @var string
-     */
-    private $filename;
-
-    /**
      * new instance of FileIO
      *
      * @param string $filename
      */
-    public function __construct($filename) {
-        $this->filename = $filename;
+    public function __construct() {
     }
 
     /**
@@ -20,11 +14,11 @@ class FileIO {
      *
      * @return array
      */
-    public function readFile() {
-        $result = file($this->filename);
+    public function readFile($filename) {
+        $result = file($filename);
 
         if ($result === false) {
-            throw new RuntimeException('File not Found: ' . $this->filename);
+            throw new RuntimeException('File not Found: ' . $filename);
         }
         return $result;
     }

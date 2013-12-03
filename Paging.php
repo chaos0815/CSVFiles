@@ -17,27 +17,28 @@ class Paging {
 	 * 
 	 * @param array $records array of record objects
 	 */
-	public function __construct($records) {
+	private function _storeRecords($records) {
 		$this->_data = $records;
 		$this->_header = array_shift($this->_data);
 	}
 	
-	public function extractFirstPage() {
+	public function extractFirstPage($records) {
 		$this->_pageIndex = 1;
-		return $this->getPage();		
+		return $this->getPage($records);		
 	}
 	
-	public function extractNextPage() {
+	public function extractNextPage($records) {
 		$this->_pageIndex++;
-		return $this->getPage();
+		return $this->getPage($records);
 	}
 	
-	public function extractPreviousPage() {
+	public function extractPreviousPage($records) {
 		$this->_pageIndex--;
-		return $this->getPage();
+		return $this->getPage($records);
 	}
 	
-	public function getPage() {
+	public function getPage($records) {
+		$this->_storeRecords($records);
 		$page = new Page($this->_header, $this->_getRecordsForPage($this->_pageIndex), $this->getPageCount(), $this->_pageIndex);
 		
 		return $page;

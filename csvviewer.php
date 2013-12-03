@@ -57,8 +57,8 @@ class csvviewer {
         $filename     = $command_line->extractFilename();
 
         $current_path = dirname(__FILE__);
-        $data_reader = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
-        $rows        = $data_reader->readFile();
+        $data_reader = new FileIO();
+        $rows        = $data_reader->readFile($current_path.'/'.$this->_filename);
 
         $parser = new CSVParser($rows);
         $record = $parser->parseCSV();

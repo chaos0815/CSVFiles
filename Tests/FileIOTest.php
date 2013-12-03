@@ -9,33 +9,13 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class FileIOTest extends PHPUnit_Framework_TestCase {
 
     /**
-     * @var FileIO
-     */
-    private $file_io;
-
-    /**
-     * Prepares the environment before running a test.
-     */
-    protected function setUp() {
-        parent::setUp ();
-        $this->file_io = new FileIO(dirname(__FILE__).'/test.csv');
-    }
-
-    /**
-     * Cleans up the environment after running a test.
-     */
-    protected function tearDown() {
-        $this->file_io = null;
-        parent::tearDown ();
-    }
-
-    /**
      * Tests DataReader->readFile()
      */
     public function testReadFile() {
-        $array = $this->file_io->readFile();
+        $file_io = new FileIO();
+        $ressult = $file_io->readFile(dirname(__FILE__).'/test.csv');
 
-        $this->assertEquals(8, count($array));
+        $this->assertEquals(8, count($ressult));
     }
 }
 
