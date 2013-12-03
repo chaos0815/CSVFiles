@@ -29,6 +29,8 @@ class csvviewer {
     protected $filename;
 
     public function __construct() {
+        $this->_page_size = self::DEFAULT_PAGE_SIZE;
+
         $command_line   = new CommandLine();
         $this->filename = $command_line->extractFilename();
 
@@ -47,15 +49,14 @@ class csvviewer {
         echo "X for exit\n";
         $handle = fopen ("php://stdin","r");
         $line = trim(fgets($handle));
-        $paging = new Paging();
         switch ($line) {
             case 'N':
             case 'n':
-                $this->_offset += $this->_page_size;
+                $this->_nextPage();
                 break;
             case 'P':
             case 'p':
-                $this->_offset -= $this->_page_size;
+                $this->_previousPage();
                 break;
             case 'X':
             case 'x':
@@ -63,6 +64,11 @@ class csvviewer {
                 exit;
         }
         $this->_viewCsv();
+    }
+
+    private function _nextPage() {
+        $paging = new Paging();
+
     }
 
     /**
@@ -76,10 +82,12 @@ class csvviewer {
         $rows        = $data_reader->getRows();
 
         $parser = new DataParser($rows);
-        $page   = $parser->getPage();
+        $record = $parser->getPage();
+
+        $paging = new Paging($record);
 
         $renderer  = new PageRenderer($page);
-        $content   = $renderer->render();
+        //$content   = $renderer->render();
 
         $writer = new DataWriter($content);
         $writer->write();
