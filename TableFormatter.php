@@ -1,6 +1,6 @@
 <?php
 
-class PageRenderer {
+class TableFormatter {
 
     const COLUMN_DELIM     = '|';
     const HEADER_DELIM     = '-';

@@ -2,7 +2,7 @@
 
 require_once 'DataParser.php';
 require_once 'FileIO.php';
-require_once 'PageRenderer.php';
+require_once 'TableFormatter.php';
 require_once 'DataWriter.php';
 require_once 'CommandLine.php';
 require_once 'Paging.php';
