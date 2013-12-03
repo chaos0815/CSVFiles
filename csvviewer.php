@@ -6,6 +6,7 @@ require_once 'TableFormatter.php';
 require_once 'DataWriter.php';
 require_once 'CommandLine.php';
 require_once 'Paging.php';
+require_once 'Page.php';
 
 new csvviewer();
 
