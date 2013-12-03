@@ -1,22 +1,37 @@
 <?php
 
 require_once 'DataParser.php';
-require_once 'DataReader.php';
+require_once 'FileIO.php';
 require_once 'PageRenderer.php';
 require_once 'DataWriter.php';
+require_once 'CommandLine.php';
+require_once 'Paging.php';
 
 new csvviewer();
 
 class csvviewer {
 
+    /**
+     * @var integer
+     */
     const DEFAULT_PAGE_SIZE = 3;
 
+    /**
+     * @var integer
+     */
     private $_page_size;
+
+    /**
+     * @var integer
+     */
     private $_offset    = 0;
-    private $_filename  = '';
+
+    protected $filename;
 
     public function __construct() {
-        $this->_getArgs();
+        $command_line   = new CommandLine();
+        $this->filename = $command_line->extractFilename();
+
         $this->_viewCsv();
         $this->_waitForInput();
     }
@@ -32,6 +47,7 @@ class csvviewer {
         echo "X for exit\n";
         $handle = fopen ("php://stdin","r");
         $line = trim(fgets($handle));
+        $paging = new Paging();
         switch ($line) {
             case 'N':
             case 'n':
@@ -56,7 +72,7 @@ class csvviewer {
      */
     private function _viewCsv() {
         $current_path = dirname(__FILE__);
-        $data_reader = new DataReader($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
+        $data_reader = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
         $rows        = $data_reader->getRows();
 
         $parser = new DataParser($rows);
@@ -70,22 +86,3 @@ class csvviewer {
 
         $this->_waitForInput();
     }
-
-    /**
-     * gets commandline args and sets class members accordingly
-     *
-     * @return void
-     */
-    private function _getArgs() {
-        global $argv;
-        $this->_filename = $argv[1];
-        if (isset($argv[2])) {
-            $this->_page_size = $argv[2];
-            if (isset($argv[3])) {
-                $this->_offset = $argv[3];
-            }
-        } else {
-            $this->_page_size = self::DEFAULT_PAGE_SIZE;
-        }
-    }
-}

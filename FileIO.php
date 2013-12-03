@@ -1,20 +1,20 @@
 <?php
-class DataReader {
-	
+class FileIO {
+
 	private $data;
 	private $header;
-	
+
 	private $length;
-	
+
 	private $offset;
-	
+
 	/**
-	 * new instance of DataReader
-	 * 
+	 * new instance of FileIO
+	 *
 	 * @param string  $filename
 	 * @param integer $page_length
 	 * @param integer $offest optional
-	 * 
+	 *
 	 * @return void
 	 */
 	public function __construct($filename, $page_length, $offset = 0) {
@@ -25,14 +25,14 @@ class DataReader {
 		if ($this->data === false) {
 			throw new RuntimeException('File not Found: '.$filename);
 		}
-		
+
 		$this->header = array_shift($this->data);
-		
+
 	}
-	
+
 	/**
 	 * get array of row strings
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getRows() {
@@ -40,6 +40,6 @@ class DataReader {
 		array_unshift($data, $this->header);
 		return $data;
 	}
-	
+
 }
 
