@@ -37,8 +37,7 @@ class csvviewer {
 
         $paging = new Paging();
 
-        $this->_viewCsv();
-        $this->_waitForInput();
+        $this->_start();
     }
 
     /**
@@ -66,12 +65,11 @@ class csvviewer {
                 echo "\n Exiting!\n\n";
                 exit;
         }
-        $this->_viewCsv();
     }
 
     private function _nextPage() {
-        $command_line   = new CommandLine();
-        $filename = $command_line->extractFilename();
+        $command_line = new CommandLine();
+        $filename     = $command_line->extractFilename();
 
         $current_path = dirname(__FILE__);
         $data_reader = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
@@ -82,8 +80,8 @@ class csvviewer {
 
         $page = $this->_paging->extractNextPage();
 
-        $renderer  = new TableFormatter($page);
-        $content   = $renderer->render();
+        $renderer = new TableFormatter($page);
+        $content  = $renderer->render();
 
         $writer = new DataWriter($content);
         $writer->write();
@@ -105,8 +103,8 @@ class csvviewer {
 
         $page = $this->_paging->extractPreviousPage();
 
-        $renderer  = new PageRenderer($page);
-        $content   = $renderer->render();
+        $renderer = new PageRenderer($page);
+        $content  = $renderer->render();
 
         $writer = new DataWriter($content);
         $writer->write();
@@ -132,8 +130,8 @@ class csvviewer {
 
         $page = $this->_paging->extractFirstPage();
 
-        $renderer  = new PageRenderer($page);
-        $content   = $renderer->render();
+        $renderer = new PageRenderer($page);
+        $content  = $renderer->render();
 
         $writer = new DataWriter($content);
         $writer->write();
