@@ -1,5 +1,10 @@
 <?php
-class Record {
+/**
+ * 
+ * @author Christian Wolf
+ *
+ */
+class Record extends ArrayObject {
+	
 }
 
-?>
