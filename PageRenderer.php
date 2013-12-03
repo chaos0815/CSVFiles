@@ -83,7 +83,7 @@ class PageRenderer {
             $result .= self::COLUMN_DELIM;
         }
 
-        return $result . "\n";
+        return str_replace('\n', '', $result) . "\n";
     }
     
     /**
