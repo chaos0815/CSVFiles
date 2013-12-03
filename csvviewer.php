@@ -25,7 +25,7 @@ class csvviewer {
     /**
      * @var integer
      */
-    private $_offset    = 0;
+    private $_offset = 0;
 
     /**
      * @var Paging
