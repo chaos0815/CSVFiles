@@ -1,6 +1,7 @@
 <?php
+require_once 'Record.php';
 
-class DataParser {
+class CSVParser {
 
     const RECORD_DELIM = ';';
 
@@ -22,7 +23,7 @@ class DataParser {
     /**
      * @return ArrayIterator
      */
-    public function getPage() {
+    public function parseCSV() {
         $result = new ArrayIterator();
 
         foreach ($this->lines as $line) {

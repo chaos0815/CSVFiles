@@ -32,8 +32,13 @@ class Paging {
 		return $this->getPage();
 	}
 	
+	public function extractPreviousPage() {
+		$this->_pageIndex--;
+		return $this->getPage();
+	}
+	
 	public function getPage() {
-		$page = new Page($this->_header, $this->_getRecordsForCurrentPage(), $this->getPageCount(), $this->_pageIndex);
+		$page = new Page($this->_header, $this->_getRecordsForPage($this->_pageIndex), $this->getPageCount(), $this->_pageIndex);
 		
 		return $page;
 	}
@@ -42,13 +47,13 @@ class Paging {
 	 * 
 	 * @return ArrayIterator
 	 */
- 	private function _getRecordsForCurrentPage() {
+ 	private function _getRecordsForPage($pageNo) {
 		$records = new ArrayIterator();
 		
-		$currentPageFirstLine = $this->_pageIndex * $this->_pageSize;
+		$currentPageFirstLine = $pageNo * $this->_pageSize;
 		
 		for ($i = $currentPageFirstLine; $i < $currentPageFirstLine + $this->_pageSize; $i++) {
-			$records->append($this->_data->offsetGet($i));
+			$records->append($this->_data[$i]);
 		}
 		
 		return $records;
