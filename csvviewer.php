@@ -103,7 +103,7 @@ class csvviewer {
 
         $page = $this->_paging->extractPreviousPage();
 
-        $renderer = new PageRenderer($page);
+        $renderer = new TableFormatter($page);
         $content  = $renderer->render();
 
         $writer = new DataWriter($content);
@@ -130,7 +130,7 @@ class csvviewer {
 
         $page = $this->_paging->extractFirstPage();
 
-        $renderer = new PageRenderer($page);
+        $renderer = new TableFormatter($page);
         $content  = $renderer->render();
 
         $writer = new DataWriter($content);

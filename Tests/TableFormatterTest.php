@@ -4,7 +4,7 @@ require_once 'TableFormatter.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
- * PageRenderer test case.
+ * TableFormatter test case.
  */
 class TableFormatterTest extends PHPUnit_Framework_TestCase {
 
@@ -22,11 +22,11 @@ class TableFormatterTest extends PHPUnit_Framework_TestCase {
         $expected .= "Peter|42 |New York|\n";
         $expected .= "Paul |57 |London  |\n";
 
-        $renderer = new TableFormatter($data);
+        $formatter = new TableFormatter($data);
 
-        $output = $renderer->render();
+        $output = $formatter->render();
 
-        $this->assertEquals($expected, $renderer->render());
+        $this->assertEquals($expected, $formatter->render());
     }
 
 }
