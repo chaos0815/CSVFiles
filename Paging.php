@@ -1,26 +1,29 @@
 <?php
 class Paging {
 	
-	private $_pageIndex = 0;
+	private $_pageIndex = 1;
 	
 	private $_pageSize = 3;
 	
+	private $_header;
+	
 	/**
 	 * 
-	 * @var Record
+	 * @var array
 	 */
 	private $_data;
 	
 	/**
 	 * 
-	 * @param Record $record record object
+	 * @param array $records array of record objects
 	 */
-	public function __construct($record) {
-		$this->_data = $record;
+	public function __construct($records) {
+		$this->_data = $records;
+		$this->_header = array_shift($this->_data);
 	}
 	
 	public function extractFirstPage() {
-		$this->_pageIndex = 0;
+		$this->_pageIndex = 1;
 		return $this->getPage();		
 	}
 	
@@ -30,15 +33,30 @@ class Paging {
 	}
 	
 	public function getPage() {
-		$page = new Page();
+		$page = new Page($this->_header, $this->_getRecordsForCurrentPage(), $this->getPageCount(), $this->_pageIndex);
+		
+		return $page;
+	}
+	
+	/**
+	 * 
+	 * @return ArrayIterator
+	 */
+ 	private function _getRecordsForCurrentPage() {
+		$records = new ArrayIterator();
 		
 		$currentPageFirstLine = $this->_pageIndex * $this->_pageSize;
 		
 		for ($i = $currentPageFirstLine; $i < $currentPageFirstLine + $this->_pageSize; $i++) {
-			$page->addRow($this->_data->offsetGet($i));
+			$records->append($this->_data->offsetGet($i));
 		}
 		
-		return $page;
+		return $records;
+	}
+
+	
+	private function getPageCount() {
+		return ceil(count($this->_data) / $this->_pageSize);
 	}
 	
 	public function getPageIndex() {

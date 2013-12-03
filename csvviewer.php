@@ -125,7 +125,7 @@ class csvviewer {
 
         $current_path = dirname(__FILE__);
         $data_reader = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
-        $rows        = $data_reader->getRows();
+        $rows        = $data_reader->readFile();
 
         $parser = new DataParser($rows);
         $record = $parser->getPage();
