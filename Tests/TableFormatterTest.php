@@ -24,9 +24,9 @@ class TableFormatterTest extends PHPUnit_Framework_TestCase {
 
         $formatter = new TableFormatter($data);
 
-        $output = $formatter->render();
+        $output = $formatter->formatAsTable();
 
-        $this->assertEquals($expected, $formatter->render());
+        $this->assertEquals($expected, $formatter->formatAsTable());
     }
 
 }

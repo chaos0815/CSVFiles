@@ -81,7 +81,7 @@ class csvviewer {
         $page = $this->_paging->extractNextPage();
 
         $renderer = new TableFormatter($page);
-        $content  = $renderer->render();
+        $content  = $renderer->formatAsTable();
 
         $writer = new DataWriter($content);
         $writer->write();
@@ -104,7 +104,7 @@ class csvviewer {
         $page = $this->_paging->extractPreviousPage();
 
         $renderer = new TableFormatter($page);
-        $content  = $renderer->render();
+        $content  = $renderer->formatAsTable();
 
         $writer = new DataWriter($content);
         $writer->write();
@@ -131,7 +131,7 @@ class csvviewer {
         $page = $this->_paging->extractFirstPage();
 
         $renderer = new TableFormatter($page);
-        $content  = $renderer->render();
+        $content  = $renderer->formatAsTable();
 
         $writer = new DataWriter($content);
         $writer->write();
