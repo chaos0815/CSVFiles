@@ -1,6 +1,6 @@
 <?php
 
-require_once 'DataParser.php';
+require_once 'CSVParser.php';
 require_once 'FileIO.php';
 require_once 'TableFormatter.php';
 require_once 'DataWriter.php';
@@ -75,7 +75,7 @@ class csvviewer {
         $data_reader = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
         $rows        = $data_reader->getRows();
 
-        $parser = new DataParser($rows);
+        $parser = new CSVParser($rows);
         $record = $parser->getPage();
 
         $page = $this->_paging->extractNextPage();
@@ -98,7 +98,7 @@ class csvviewer {
         $data_reader  = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
         $rows         = $data_reader->getRows();
 
-        $parser = new DataParser($rows);
+        $parser = new CSVParser($rows);
         $record = $parser->getPage();
 
         $page = $this->_paging->extractPreviousPage();
@@ -125,7 +125,7 @@ class csvviewer {
         $data_reader = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
         $rows        = $data_reader->readFile();
 
-        $parser = new DataParser($rows);
+        $parser = new CSVParser($rows);
         $record = $parser->getPage();
 
         $page = $this->_paging->extractFirstPage();
