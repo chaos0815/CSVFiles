@@ -70,6 +70,13 @@ class csvviewer {
     }
 
 
+    /**
+     * grabs the page
+     *
+     * @param string $which next, previous or first (default)
+     *
+     * @return Page
+     */
     private function _getPage($which = '') {
         switch ($which) {
             case 'next':
@@ -111,5 +118,4 @@ class csvviewer {
         }
         $this->_start();
     }
-
 }
