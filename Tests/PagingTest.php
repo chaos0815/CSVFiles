@@ -16,6 +16,8 @@ class PagingTest extends PHPUnit_Framework_TestCase {
 	 */
 	private $Paging;
 	
+	private $recs;
+	
 	/**
 	 * Prepares the environment before running a test.
 	 */
@@ -23,9 +25,9 @@ class PagingTest extends PHPUnit_Framework_TestCase {
 		parent::setUp ();
 		
 		// TODO Auto-generated PagingTest::setUp()
-		$recs = array(new Record(array('1','2','3')), new Record(array('21','22','23')), new Record(array('31','32','33')));
+		$this->recs = array(new Record(array('1','2','3')), new Record(array('21','22','23')), new Record(array('31','32','33')));
 		
-		$this->Paging = new Paging($recs);
+		$this->Paging = new Paging();
 	}
 	
 	/**
@@ -50,7 +52,7 @@ class PagingTest extends PHPUnit_Framework_TestCase {
 	 * Tests Paging->extractFirstPage()
 	 */
 	public function testExtractFirstPage() {
-		$page = $this->Paging->extractFirstPage();
+		$page = $this->Paging->extractFirstPage($this->recs);
 		$this->assertInstanceOf('Page', $page);
 		$this->assertEquals(1, $this->Paging->getPageIndex());
 	}
@@ -59,9 +61,19 @@ class PagingTest extends PHPUnit_Framework_TestCase {
 	 * Tests Paging->extractNextPage()
 	 */
 	public function testExtractNextPage() {
-		$page = $this->Paging->extractNextPage();
+		$page = $this->Paging->extractNextPage($this->recs);
 		$this->assertInstanceOf('Page', $page);
 		$this->assertEquals(2, $this->Paging->getPageIndex());
+	}
+	
+	/**
+	 * Tests Paging->extractNextPage()
+	 */
+	public function testExtractPreviousPage() {
+		$this->Paging->extractNextPage($this->recs);
+		$page = $this->Paging->extractPreviousPage($this->recs);
+		$this->assertInstanceOf('Page', $page);
+		$this->assertEquals(1, $this->Paging->getPageIndex());
 	}
 	
 	
