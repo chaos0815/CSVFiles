@@ -27,7 +27,8 @@ class CSVParser {
         $result = new ArrayIterator();
 
         foreach ($this->lines as $line) {
-            $result->append($this->_parseLine($line));
+            $record = new Record($this->_parseLine($line));
+            $result->append($record);
         }
 
         return $result;
