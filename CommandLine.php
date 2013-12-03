@@ -15,7 +15,7 @@ class CommandLine {
      *
      * @return void
      */
-    private function getInitialArgs() {
+    private function _getInitialArgs() {
         global $argv;
         $this->_commandline_args['filename'] = $argv[1];
     }
