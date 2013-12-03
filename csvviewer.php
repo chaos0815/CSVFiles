@@ -6,6 +6,7 @@ require_once 'PageRenderer.php';
 require_once 'DataWriter.php';
 require_once 'CommandLine.php';
 require_once 'Paging.php';
+require_once 'FileIO.php';
 
 new csvviewer();
 
@@ -26,13 +27,15 @@ class csvviewer {
      */
     private $_offset    = 0;
 
-    protected $filename;
+    /**
+     * @var Paging
+     */
+    private $_paging;
 
     public function __construct() {
         $this->_page_size = self::DEFAULT_PAGE_SIZE;
 
-        $command_line   = new CommandLine();
-        $this->filename = $command_line->extractFilename();
+        $paging = new Paging();
 
         $this->_viewCsv();
         $this->_waitForInput();
@@ -67,16 +70,9 @@ class csvviewer {
     }
 
     private function _nextPage() {
-        $paging = new Paging();
+        $command_line   = new CommandLine();
+        $filename = $command_line->extractFilename();
 
-    }
-
-    /**
-     * main processing, calling reader, parser, renderer and writer
-     *
-     * @return void
-     */
-    private function _viewCsv() {
         $current_path = dirname(__FILE__);
         $data_reader = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
         $rows        = $data_reader->getRows();
@@ -84,13 +80,64 @@ class csvviewer {
         $parser = new DataParser($rows);
         $record = $parser->getPage();
 
-        $paging = new Paging($record);
+        $page = $this->_paging->extractNextPage();
 
         $renderer  = new PageRenderer($page);
-        //$content   = $renderer->render();
+        $content   = $renderer->render();
 
         $writer = new DataWriter($content);
         $writer->write();
 
         $this->_waitForInput();
     }
+
+
+    private function _previousPage() {
+        $command_line = new CommandLine();
+        $filename     = $command_line->extractFilename();
+
+        $current_path = dirname(__FILE__);
+        $data_reader  = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
+        $rows         = $data_reader->getRows();
+
+        $parser = new DataParser($rows);
+        $record = $parser->getPage();
+
+        $page = $this->_paging->extractPreviousPage();
+
+        $renderer  = new PageRenderer($page);
+        $content   = $renderer->render();
+
+        $writer = new DataWriter($content);
+        $writer->write();
+
+        $this->_waitForInput();
+    }
+
+    /**
+     * main processing, calling reader, parser, renderer and writer
+     *
+     * @return void
+     */
+    private function _start() {
+        $command_line = new CommandLine();
+        $filename     = $command_line->extractFilename();
+
+        $current_path = dirname(__FILE__);
+        $data_reader = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
+        $rows        = $data_reader->getRows();
+
+        $parser = new DataParser($rows);
+        $record = $parser->getPage();
+
+        $page = $this->_paging->extractFirstPage();
+
+        $renderer  = new PageRenderer($page);
+        $content   = $renderer->render();
+
+        $writer = new DataWriter($content);
+        $writer->write();
+
+        $this->_waitForInput();
+    }
+}
