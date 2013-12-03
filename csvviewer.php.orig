@@ -6,6 +6,7 @@ require_once 'TableFormatter.php';
 require_once 'DataWriter.php';
 require_once 'CommandLine.php';
 require_once 'Paging.php';
+require_once 'FileIO.php';
 
 new csvviewer();
 
@@ -24,7 +25,7 @@ class csvviewer {
     /**
      * @var integer
      */
-    private $_offset = 0;
+    private $_offset    = 0;
 
     /**
      * @var Paging
@@ -60,8 +61,13 @@ class csvviewer {
 
         $paging = new Paging($record);
 
-        $renderer = new TableFormatter($this->_page);
+<<<<<<< HEAD
+        $renderer = new PageRenderer($this->_page);
+        $content  = $renderer->render();
+=======
+        $renderer = new TableFormatter($page);
         $content  = $renderer->formatAsTable();
+>>>>>>> 9c8e41740ae03ce51a75aff22bac46d3bab820df
 
         $writer = new DataWriter($content);
         $writer->write();
@@ -70,6 +76,7 @@ class csvviewer {
     }
 
 
+<<<<<<< HEAD
     private function _getPage($which = '') {
         switch ($which) {
             case 'next':
@@ -81,6 +88,28 @@ class csvviewer {
             default:
                 return $this->_paging->extractFirstPage();
         }
+=======
+    private function _previousPage() {
+        $command_line = new CommandLine();
+        $filename     = $command_line->extractFilename();
+
+        $current_path = dirname(__FILE__);
+        $data_reader  = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
+        $rows         = $data_reader->getRows();
+
+        $parser = new CSVParser($rows);
+        $record = $parser->parseCSV();
+
+        $page = $this->_paging->extractPreviousPage();
+
+        $renderer = new TableFormatter($page);
+        $content  = $renderer->formatAsTable();
+
+        $writer = new DataWriter($content);
+        $writer->write();
+
+        $this->_waitForInput();
+>>>>>>> 9c8e41740ae03ce51a75aff22bac46d3bab820df
     }
 
 
@@ -89,6 +118,7 @@ class csvviewer {
      *
      * @return void
      */
+<<<<<<< HEAD
     private function _waitForInput() {
         echo "\n\nN for previous ".$this->_page_size." lines.\n";
         echo "P for ".$this->_page_size." more lines.\n";
@@ -110,6 +140,28 @@ class csvviewer {
                 exit;
         }
         $this->_start();
+=======
+    private function _start() {
+        $command_line = new CommandLine();
+        $filename     = $command_line->extractFilename();
+
+        $current_path = dirname(__FILE__);
+        $data_reader = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
+        $rows        = $data_reader->readFile();
+
+        $parser = new CSVParser($rows);
+        $record = $parser->parseCSV();
+
+        $page = $this->_paging->extractFirstPage();
+
+        $renderer = new TableFormatter($page);
+        $content  = $renderer->formatAsTable();
+
+        $writer = new DataWriter($content);
+        $writer->write();
+
+        $this->_waitForInput();
+>>>>>>> 9c8e41740ae03ce51a75aff22bac46d3bab820df
     }
 
 }

@@ -45,10 +45,10 @@ class CSVParserTest extends PHPUnit_Framework_TestCase {
 
 
 	/**
-	 * Tests DataParser->getPage()
+	 * Tests CSVParser->parseCSV()
 	 */
-	public function testGetPage() {
-		$page = $this->csv_parser->getPage();
+	public function testParseCSV() {
+		$page = $this->csv_parser->parseCSV();
 		
 		$this->assertInstanceOf('ArrayIterator', $page);
 		$this->assertEquals(3, count($page));

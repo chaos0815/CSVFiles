@@ -9,7 +9,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class TableFormatterTest extends PHPUnit_Framework_TestCase {
 
     /**
-     * Tests DataParser->getPage()
+     * Tests TableFormatter->getPage()
      */
     public function testGetPage() {
         $data = new ArrayIterator();

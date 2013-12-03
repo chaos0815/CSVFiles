@@ -1,4 +1,5 @@
 <?php
+require_once 'Record.php';
 
 class CSVParser {
 
@@ -22,11 +23,12 @@ class CSVParser {
     /**
      * @return ArrayIterator
      */
-    public function getPage() {
+    public function parseCSV() {
         $result = new ArrayIterator();
 
         foreach ($this->lines as $line) {
-            $result->append($this->_parseLine($line));
+            $record = new Record($this->_parseLine($line));
+            $result->append($record);
         }
 
         return $result;
