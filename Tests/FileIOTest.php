@@ -8,59 +8,34 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class FileIOTest extends PHPUnit_Framework_TestCase {
 
-	/**
-	 *
-	 * @var FileIO
-	 */
-	private $DataReader;
+    /**
+     * @var FileIO
+     */
+    private $file_io;
 
-	/**
-	 * Prepares the environment before running a test.
-	 */
-	protected function setUp() {
-		parent::setUp ();
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp() {
+        parent::setUp ();
+        $this->file_io = new FileIO(dirname(__FILE__).'/test.csv');
+    }
 
-		// TODO Auto-generated FileIOTest::setUp()
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown() {
+        $this->file_io = null;
+        parent::tearDown ();
+    }
 
-		$this->DataReader = new FileIO(dirname(__FILE__).'/test.csv', 2);
-	}
+    /**
+     * Tests DataReader->readFile()
+     */
+    public function testReadFile() {
+        $array = $this->file_io->readFile();
 
-	/**
-	 * Cleans up the environment after running a test.
-	 */
-	protected function tearDown() {
-		// TODO Auto-generated DataReaderTest::tearDown()
-		$this->DataReader = null;
-
-		parent::tearDown ();
-	}
-
-	/**
-	 * Constructs the test case.
-	 */
-	public function __construct() {
-		// TODO Auto-generated constructor
-	}
-
-	/**
-	 * Tests DataReader->__construct()
-	 */
-	public function test__construct() {
-		// TODO Auto-generated FileIOTest->test__construct()
-		$this->markTestIncomplete ( "__construct test not implemented" );
-
-		$this->DataReader->__construct(/* parameters */);
-	}
-
-	/**
-	 * Tests DataReader->getRows()
-	 */
-	public function testGetRows() {
-		// TODO Auto-generated FileIOTest->testGetRows()
-
-		$array = $this->DataReader->getRows();
-
-		$this->assertEquals(3, count($array));
-	}
+        $this->assertEquals(8, count($array));
+    }
 }
 

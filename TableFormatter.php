@@ -1,11 +1,11 @@
 <?php
 
-class PageRenderer {
+class TableFormatter {
 
     const COLUMN_DELIM     = '|';
     const HEADER_DELIM     = '-';
     const HEADER_COL_DELIM = '+';
-    
+
     /**
      * @var ArrayIterator
      */
@@ -15,7 +15,7 @@ class PageRenderer {
      * @var array
      */
     private $max_lengths;
-    
+
     /**
      * @param ArrayIterator $data
      */
@@ -32,14 +32,14 @@ class PageRenderer {
     /**
      * @return string
      */
-    public function render() {
+    public function formatAsTable() {
         $result = '';
 
         $this->data->rewind();
-        
+
         $result .= $this->_formatHeader($this->data->current());
         $this->data->next();
-        
+
         while ($this->data->valid()) {
             $record = $this->data->current();
 
@@ -58,13 +58,13 @@ class PageRenderer {
      */
     private function _formatHeader($record) {
         $result = $this->_formatLine($record);
-        
+
         foreach ($record as $k => $v) {
             $len = $this->max_lengths[$k];
             $result .= sprintf("%'" .self::HEADER_DELIM. $len . "s", '');
             $result .= self::HEADER_COL_DELIM;
         }
-        
+
         return $result . "\n";
     }
 
@@ -85,7 +85,7 @@ class PageRenderer {
 
         return str_replace('\n', '', $result) . "\n";
     }
-    
+
     /**
      * return void
      */
