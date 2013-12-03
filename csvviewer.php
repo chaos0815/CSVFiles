@@ -54,7 +54,7 @@ class csvviewer {
 
         $current_path = dirname(__FILE__);
         $data_reader = new FileIO();
-        $rows        = $data_reader->readFile($current_path.'/'.$this->_filename);
+        $rows        = $data_reader->readFile($current_path.'/'.$filename);
 
         $parser = new CSVParser();
         $record = $parser->parseCSV($rows);
@@ -82,13 +82,13 @@ class csvviewer {
     private function _getPage($record) {
         switch ($this->_what) {
             case 'next':
-                return $this->_paging->extractNextPage();
+                return $this->_paging->extractNextPage($record);
                 break;
             case 'previous':
-                return $this->_paging->extractPreviousPage();
+                return $this->_paging->extractPreviousPage($record);
                 break;
             default:
-                return $this->_paging->extractFirstPage();
+                return $this->_paging->extractFirstPage($record);
         }
     }
 
