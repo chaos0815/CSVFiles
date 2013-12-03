@@ -76,7 +76,7 @@ class csvviewer {
         $rows        = $data_reader->getRows();
 
         $parser = new CSVParser($rows);
-        $record = $parser->getPage();
+        $record = $parser->parseCSV();
 
         $page = $this->_paging->extractNextPage();
 
@@ -99,7 +99,7 @@ class csvviewer {
         $rows         = $data_reader->getRows();
 
         $parser = new CSVParser($rows);
-        $record = $parser->getPage();
+        $record = $parser->parseCSV();
 
         $page = $this->_paging->extractPreviousPage();
 
@@ -126,7 +126,7 @@ class csvviewer {
         $rows        = $data_reader->readFile();
 
         $parser = new CSVParser($rows);
-        $record = $parser->getPage();
+        $record = $parser->parseCSV();
 
         $page = $this->_paging->extractFirstPage();
 

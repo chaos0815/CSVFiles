@@ -54,9 +54,9 @@ class CSVParserTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Tests DataParser->getPage()
+	 * Tests CSVParser->parseCSV()
 	 */
-	public function testGetPage() {
+	public function testParseCSV() {
 		// TODO Auto-generated DataParserTest->testGetPage()
 		$this->markTestIncomplete ( "getPage test not implemented" );
 
