@@ -20,6 +20,16 @@ class Paging {
 	}
 	
 	public function extractFirstPage() {
+		$this->_pageIndex = 0;
+		return $this->getPage();		
+	}
+	
+	public function extractNextPage() {
+		$this->_pageIndex++;
+		return $this->getPage();
+	}
+	
+	public function getPage() {
 		$page = new Page();
 		
 		$currentPageFirstLine = $this->_pageIndex * $this->_pageSize;
@@ -29,15 +39,6 @@ class Paging {
 		}
 		
 		return $page;
-		
-	}
-	
-	public function extractNextPage() {
-	
-	}
-	
-	public function getPage($page_number) {
-		
 	}
 	
 	public function getPageIndex() {
