@@ -36,7 +36,7 @@ class csvviewer {
     public function __construct() {
         $this->_page_size = self::DEFAULT_PAGE_SIZE;
 
-        $this->_paging = new Paging($record);
+        $this->_paging = new Paging();
         $this->_page = $this->_getPage();
 
         $this->_start();
