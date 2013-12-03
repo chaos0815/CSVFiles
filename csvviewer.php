@@ -1,7 +1,7 @@
 <?php
 
 require_once 'DataParser.php';
-require_once 'DataReader.php';
+require_once 'FileIO.php';
 require_once 'PageRenderer.php';
 require_once 'DataWriter.php';
 require_once 'CommandLine.php';
@@ -78,7 +78,7 @@ class csvviewer {
      */
     private function _viewCsv() {
         $current_path = dirname(__FILE__);
-        $data_reader = new DataReader($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
+        $data_reader = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
         $rows        = $data_reader->getRows();
 
         $parser = new DataParser($rows);
