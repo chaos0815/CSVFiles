@@ -3,4 +3,4 @@ CSVFiles
 
 SIGS Seminar Sample
 
-A Simple CSV parser.
+A Simple CSV File Viewer.
