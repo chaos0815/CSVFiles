@@ -32,85 +32,16 @@ class csvviewer {
      */
     private $_paging;
 
+    private $_page;
+
     public function __construct() {
         $this->_page_size = self::DEFAULT_PAGE_SIZE;
 
-        $paging = new Paging();
+        $this->_page = $this->_getPage();
 
         $this->_start();
     }
 
-    /**
-     * waiting for input and triggering process
-     *
-     * @return void
-     */
-    private function _waitForInput() {
-        echo "\n\nN for previous ".$this->_page_size." lines.\n";
-        echo "P for ".$this->_page_size." more lines.\n";
-        echo "X for exit\n";
-        $handle = fopen ("php://stdin","r");
-        $line = trim(fgets($handle));
-        switch ($line) {
-            case 'N':
-            case 'n':
-                $this->_nextPage();
-                break;
-            case 'P':
-            case 'p':
-                $this->_previousPage();
-                break;
-            case 'X':
-            case 'x':
-                echo "\n Exiting!\n\n";
-                exit;
-        }
-    }
-
-    private function _nextPage() {
-        $command_line = new CommandLine();
-        $filename     = $command_line->extractFilename();
-
-        $current_path = dirname(__FILE__);
-        $data_reader = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
-        $rows        = $data_reader->getRows();
-
-        $parser = new DataParser($rows);
-        $record = $parser->getPage();
-
-        $page = $this->_paging->extractNextPage();
-
-        $renderer = new PageRenderer($page);
-        $content  = $renderer->render();
-
-        $writer = new DataWriter($content);
-        $writer->write();
-
-        $this->_waitForInput();
-    }
-
-
-    private function _previousPage() {
-        $command_line = new CommandLine();
-        $filename     = $command_line->extractFilename();
-
-        $current_path = dirname(__FILE__);
-        $data_reader  = new FileIO($current_path.'/'.$this->_filename, $this->_page_size, $this->_offset);
-        $rows         = $data_reader->getRows();
-
-        $parser = new DataParser($rows);
-        $record = $parser->getPage();
-
-        $page = $this->_paging->extractPreviousPage();
-
-        $renderer = new PageRenderer($page);
-        $content  = $renderer->render();
-
-        $writer = new DataWriter($content);
-        $writer->write();
-
-        $this->_waitForInput();
-    }
 
     /**
      * main processing, calling reader, parser, renderer and writer
@@ -128,9 +59,9 @@ class csvviewer {
         $parser = new DataParser($rows);
         $record = $parser->getPage();
 
-        $page = $this->_paging->extractFirstPage();
+        $paging = new Paging($record);
 
-        $renderer = new PageRenderer($page);
+        $renderer = new PageRenderer($this->_page);
         $content  = $renderer->render();
 
         $writer = new DataWriter($content);
@@ -138,4 +69,48 @@ class csvviewer {
 
         $this->_waitForInput();
     }
+
+
+    private function _getPage($which = '') {
+        switch ($which) {
+            case 'next':
+                return $this->_paging->extractNextPage();
+                break;
+            case 'previous':
+                return $this->_paging->extractPreviousPage();
+                break;
+            default:
+                return $this->_paging->extractFirstPage();
+        }
+    }
+
+
+    /**
+     * waiting for input and triggering process
+     *
+     * @return void
+     */
+    private function _waitForInput() {
+        echo "\n\nN for previous ".$this->_page_size." lines.\n";
+        echo "P for ".$this->_page_size." more lines.\n";
+        echo "X for exit\n";
+        $handle = fopen ("php://stdin","r");
+        $line = trim(fgets($handle));
+        switch ($line) {
+            case 'N':
+            case 'n':
+                $this->_page = $this->_getPage('next');
+                break;
+            case 'P':
+            case 'p':
+                $this->_page = $this->_getPage('previous');
+                break;
+            case 'X':
+            case 'x':
+                echo "\n Exiting!\n\n";
+                exit;
+        }
+        $this->_start();
+    }
+
 }
