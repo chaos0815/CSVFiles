@@ -6,6 +6,7 @@ require_once 'TableFormatter.php';
 require_once 'DataWriter.php';
 require_once 'CommandLine.php';
 require_once 'Paging.php';
+require_once 'Page.php';
 
 new csvviewer();
 
@@ -36,6 +37,7 @@ class csvviewer {
     public function __construct() {
         $this->_page_size = self::DEFAULT_PAGE_SIZE;
 
+        $this->_paging = new Paging();
         $this->_page = $this->_getPage();
 
         $this->_start();
@@ -58,8 +60,6 @@ class csvviewer {
         $parser = new CSVParser($rows);
         $record = $parser->parseCSV();
 
-        $paging = new Paging($record);
-
         $renderer = new TableFormatter($this->_page);
         $content  = $renderer->formatAsTable();
 
@@ -70,6 +70,13 @@ class csvviewer {
     }
 
 
+    /**
+     * grabs the page
+     *
+     * @param string $which next, previous or first (default)
+     *
+     * @return Page
+     */
     private function _getPage($which = '') {
         switch ($which) {
             case 'next':

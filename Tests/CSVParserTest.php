@@ -43,34 +43,16 @@ class CSVParserTest extends PHPUnit_Framework_TestCase {
 		// TODO Auto-generated constructor
 	}
 
-	/**
-	 * Tests DataParser->__construct()
-	 */
-	public function test__construct() {
-		// TODO Auto-generated DataParserTest->test__construct()
-		$this->markTestIncomplete ( "__construct test not implemented" );
-
-		$this->csv_parser->__construct(/* parameters */);
-	}
 
 	/**
 	 * Tests CSVParser->parseCSV()
 	 */
 	public function testParseCSV() {
-		// TODO Auto-generated DataParserTest->testGetPage()
-		$this->markTestIncomplete ( "getPage test not implemented" );
-
-		$this->csv_parser->getPage(/* parameters */);
+		$page = $this->csv_parser->parseCSV();
+		
+		$this->assertInstanceOf('ArrayIterator', $page);
+		$this->assertEquals(3, count($page));
 	}
 
-	/**
-	 * Tests DataParser->setDelimiter()
-	 */
-	public function testSetDelimiter() {
-		// TODO Auto-generated DataParserTest->testSetDelimiter()
-		$this->markTestIncomplete ( "setDelimiter test not implemented" );
-
-		$this->csv_parser->setDelimiter(/* parameters */);
-	}
 }
 
