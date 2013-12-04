@@ -2,14 +2,6 @@
 class FileIO {
 
     /**
-     * new instance of FileIO
-     *
-     * @param string $filename
-     */
-    public function __construct() {
-    }
-
-    /**
      * get array of row strings
      *
      * @return array

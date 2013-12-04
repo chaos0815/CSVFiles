@@ -2,22 +2,13 @@
 class CommandLine {
 
     /**
-     * @var array
-     */
-    private $_commandline_args = array();
-
-    public function __construct() {
-        $this->_getInitialArgs();
-    }
-
-    /**
      * gets commandline args and sets class members accordingly
      *
      * @return void
      */
-    private function _getInitialArgs() {
+    private function _getCommandLineParameters() {
         global $argv;
-        $this->_commandline_args['filename'] = $argv[1];
+        return  $argv;
     }
 
     /**
@@ -25,8 +16,13 @@ class CommandLine {
      *
      * @return string
      */
-    public function extractFilename() {
-        return $this->_commandline_args['filename'];
+    public function extractFilename($args) {
+        return $args[1];
+    }
+    
+    public function getFilename() {
+    	$args = $this->_getCommandLineParameters();
+    	return $this->extractFilename($args);
     }
 }
 

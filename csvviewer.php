@@ -37,6 +37,7 @@ class csvviewer {
     public function __construct() {
         $this->_page_size = self::DEFAULT_PAGE_SIZE;
 
+        $this->_paging = new Paging();
 
 
         $this->_start();
@@ -50,7 +51,7 @@ class csvviewer {
      */
     private function _start() {
         $command_line = new CommandLine();
-        $filename     = $command_line->extractFilename();
+        $filename     = $command_line->getFilename();
 
         $current_path = dirname(__FILE__);
         $data_reader = new FileIO();
@@ -59,7 +60,6 @@ class csvviewer {
         $parser = new CSVParser();
         $record = $parser->parseCSV($rows);
 
-        $this->_paging = new Paging();
         $page          = $this->_getPage($record);
 
         $renderer = new TableFormatter($page);

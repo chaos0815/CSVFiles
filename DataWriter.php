@@ -17,7 +17,7 @@ class DataWriter {
     /**
      * @return void
      */
-    public function write() {
-        echo $this->output; // :-)
+    public function write($output) {
+        echo $output; // :-)
     }
 }
