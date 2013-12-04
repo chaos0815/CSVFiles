@@ -29,4 +29,11 @@ class Question {
     public function getAnswers() {
         return $this->answers;
     }
+
+    /**
+     * @param string $answer
+     */
+    public function addAnswer($answer) {
+        $this->answers[] = $answer;
+    }
 }

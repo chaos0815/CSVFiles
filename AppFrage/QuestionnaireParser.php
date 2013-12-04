@@ -1,6 +1,4 @@
 <?php
-require_once 'Questionnaire.php';
-
 class QuestionnaireParser {
 
     /**
@@ -18,16 +16,20 @@ class QuestionnaireParser {
             if ($line[0] == '?') {
                 if (!empty($text) && !empty($answers)) {
                     $questions[] = new Question($text, $answers);
-
-                    $text    = ltrim($line, '?');
-                    $answers = array();
                 }
+                $text    = ltrim($line, '?');
+                $answers = array();
+
             } else {
                 if ($line[0] == '*') {
                     $line = ltrim ($line, '*');
                 }
                 $answers[] = $line;
             }
+        }
+
+        if (!empty($text) && !empty($answers)) {
+            $questions[] = new Question($text, $answers);
         }
 
         return new Questionnaire($questions);

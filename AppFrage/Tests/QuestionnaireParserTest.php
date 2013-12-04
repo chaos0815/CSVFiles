@@ -1,4 +1,6 @@
 <?php
+require_once 'AppFrage/Questionnaire.php';
+require_once 'AppFrage/Question.php';
 require_once 'AppFrage/QuestionnaireParser.php';
 
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -14,7 +16,7 @@ class QuestionnaireParserTest extends PHPUnit_Framework_TestCase {
             "5",
             "*7",
             "3",
-            "?Abcd",
+            "?What is the next question",
             "a",
             "b",
             "*c"
@@ -24,6 +26,7 @@ class QuestionnaireParserTest extends PHPUnit_Framework_TestCase {
         $result = $parser->parseQuestionnaire($input);
 
         $this->assertInstanceOf('Questionnaire', $result);
+        $this->assertEquals(2, count($result));
     }
 }
 
