@@ -1,7 +1,7 @@
 <?php
 require_once 'AppFrage/Question.php';
 require_once 'AppFrage/Questionnaire.php';
-		
+
 class QuestionnaireParser {
 
     /**
@@ -42,6 +42,14 @@ class QuestionnaireParser {
      * @return Questionnaire
      */
     public function addDontKnowAnswers(Questionnaire $questionnaire) {
+        $questions = $questionnaire->getIterator();
+
+        while ($questions->valid()) {
+            $question = $questions->current();
+            $question->addAnswer('Don\'t know');
+            $questions->next();
+        }
+
         return $questionnaire;
     }
 }

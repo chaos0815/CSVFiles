@@ -43,8 +43,7 @@ class QuestionnaireController {
      * @return ZendForm
      */
     private function _createQuestionnaireForm($questionnaire = array()) {
-        $form = new QuestionnaireForm();
-        $form->set($questionnaire);
+        $form = new QuestionnaireForm($questionnaire);
 
         return $form->init();
     }
