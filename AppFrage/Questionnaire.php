@@ -1,5 +1,6 @@
 <?php
-class Questionnaire {
+class Questionnaire extends ArrayObject {
+	
 }
 
 ?>
