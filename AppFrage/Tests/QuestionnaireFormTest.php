@@ -23,7 +23,6 @@ class QuestionnaireFormTest extends PHPUnit_Framework_TestCase {
 		
 		// TODO Auto-generated QuestionnaireFormTest::setUp()
 		
-		$this->QuestionnaireForm = new QuestionnaireForm();
 		
 		$input = array(
 				"?How many beers have I had yesterday",
@@ -37,7 +36,7 @@ class QuestionnaireFormTest extends PHPUnit_Framework_TestCase {
 		);
 		
 		$parser = new QuestionnaireParser();
-		$this->QuestionnaireForm->setQuestionnaire($parser->parseQuestionnaire($input));
+		$this->QuestionnaireForm = new QuestionnaireForm($parser->parseQuestionnaire($input));
 	}
 	
 	/**
