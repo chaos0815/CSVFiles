@@ -32,4 +32,11 @@ class QuestionnaireParser {
 
         return new Questionnaire($questions);
     }
+
+    /**
+     * @return Questionnaire
+     */
+    public function addDontKnowAnswers(Questionnaire $questionnaire) {
+        return $questionnaire;
+    }
 }
