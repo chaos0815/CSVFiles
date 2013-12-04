@@ -1,6 +1,11 @@
 <?php
+require_once 'Zend/Form.php';
 class QuestionnaireForm extends Zend_Form {
 	private $questionnaire;
+	
+	public function __construct(Questionnaire $questionnaire){
+		$this->questionnaire = $questionnaire;
+	}
 	
 	public function init() {
 		foreach ($this->questionnaire as $question) {
@@ -8,10 +13,6 @@ class QuestionnaireForm extends Zend_Form {
 		}
 		
 	} 
-	
-	public function setQuestionnaire(Questionnaire $questionnaire) {
-		$this->questionnaire = $questionnaire;
-	}
 
 	private function addQuestion(Question $question) {
 		$text_element = new Zend_Form_Element_Text('qtext');
