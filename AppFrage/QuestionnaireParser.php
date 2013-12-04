@@ -1,5 +1,4 @@
 <?php
-require_once 'AppFrage/Questionaire.php';
 
 class QuestionnaireParser {
 

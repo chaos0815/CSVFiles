@@ -1,4 +1,5 @@
 <?php
+require_once 'AppFrage/Questionnaire.php';
 require_once 'AppFrage/QuestionnaireParser.php';
 
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -14,7 +15,7 @@ class QuestionnaireParserTest extends PHPUnit_Framework_TestCase {
             "5",
             "*7",
             "3",
-            "?Abcd",
+            "?What is the next question",
             "a",
             "b",
             "*c"
