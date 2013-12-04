@@ -1,7 +1,7 @@
 <?php
 require_once 'AppFrage/Question.php';
 require_once 'AppFrage/Questionnaire.php';
-		
+
 class QuestionnaireParser {
 
     /**
