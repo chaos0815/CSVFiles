@@ -5,6 +5,9 @@ require_once 'QuestionnaireParser.php';
 require_once 'QuestionnaireForm.php';
 require_once 'FileIO.php';
 
+$q = new QuestionnaireController();
+$q->startAction();
+
 /**
  *
  * @author heiko
