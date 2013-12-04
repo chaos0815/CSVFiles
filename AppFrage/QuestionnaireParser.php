@@ -9,6 +9,27 @@ class QuestionnaireParser {
      * @return Questionnaire
      */
     public function parseQuestionnaire($lines) {
-        return new Questionnaire(array());
+        $questions = array();
+
+        $text    = '';
+        $answers = array();
+
+        foreach ($lines as $line) {
+            if ($line[0] == '?') {
+                if (!empty($text) && !empty($answers)) {
+                    $questions[] = new Question($text, $answers);
+
+                    $text    = ltrim($line, '?');
+                    $answers = array();
+                }
+            } else {
+                if ($line[0] == '*') {
+                    $line = ltrim ($line, '*');
+                }
+                $answers[] = $line;
+            }
+        }
+
+        return new Questionnaire($questions);
     }
 }
