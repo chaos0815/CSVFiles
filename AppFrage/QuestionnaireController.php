@@ -4,8 +4,18 @@ require_once 'Questionnaire.php';
 require_once 'QuestionnaireParser.php';
 require_once 'FileIO.php';
 
-class QuestionnaireController extends Zend_Controller_Action {
+/**
+ *
+ * @author heiko
+ *
+ */
+class QuestionnaireController {
 
+    /**
+     * initially displays the questionnaire form
+     *
+     * @return void
+     */
     public function startAction() {
         $file = new FileIO();
         $raw  = $file->readFile();
@@ -17,13 +27,21 @@ class QuestionnaireController extends Zend_Controller_Action {
 
         $questionnaire_form = $this->_createQuestionnaireForm($questionnaire);
 
+        echo $questionnaire->toString();
+
     }
 
+    /**
+     * creates the questionnaire form
+     *
+     * @param Questionnaire $questionnaire
+     *
+     * @return ZendForm
+     */
     private function _createQuestionnaireForm($questionnaire = array()) {
         $form = new QuestionnaireForm();
         $form->set($questionnaire);
 
-        return ;
-
+        return $form->init();
     }
 }
