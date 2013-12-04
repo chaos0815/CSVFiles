@@ -27,6 +27,6 @@ class Question {
      * @return array
      */
     public function getAnswers() {
-        return $answers;
+        return $this->answers;
     }
 }

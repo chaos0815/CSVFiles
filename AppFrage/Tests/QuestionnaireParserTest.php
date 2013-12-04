@@ -1,5 +1,5 @@
 <?php
-require_once 'QuestionnaireParser.php';
+require_once 'AppFrage/QuestionnaireParser.php';
 
 require_once 'PHPUnit/Framework/TestCase.php';
 
