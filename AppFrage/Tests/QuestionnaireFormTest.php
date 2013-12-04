@@ -60,7 +60,7 @@ class QuestionnaireFormTest extends PHPUnit_Framework_TestCase {
 	 * Tests QuestionnaireForm->init()
 	 */
 	public function testInit() {
-		echo $this->QuestionnaireForm->__toString();
+	    $str = $this->QuestionnaireForm->__toString();
 		$this->assertStringStartsWith('<form ', $this->QuestionnaireForm->__toString());
 	}
 	

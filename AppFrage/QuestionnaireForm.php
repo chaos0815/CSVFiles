@@ -1,10 +1,14 @@
 <?php
 require_once 'Zend/Form.php';
+require_once 'Zend/Form/Element/Text.php';
+require_once 'Zend/Form/Element/MultiCheckbox.php';
+
 class QuestionnaireForm extends Zend_Form {
 	private $questionnaire;
 	
 	public function __construct(Questionnaire $questionnaire){
 		$this->questionnaire = $questionnaire;
+		parent::__construct();
 	}
 	
 	public function init() {
@@ -23,12 +27,15 @@ class QuestionnaireForm extends Zend_Form {
 	}
 	
 	private function getAnswers($answers) {
-		$answers = new Zend_Form_Element_MultiCheckbox('answers');
-		$answers->setOptions($answers);
+		$answer = new Zend_Form_Element_MultiCheckbox('answers');
+		$answer->setOptions($answers);
 		
-		return $answers;
+		return $answer;
 	}
 	
+	public function __toString() {
+		return '<form >hier die Frage <input type="text">huhu</input><input type="text">other</input>';
+	}
 	
 }
 
